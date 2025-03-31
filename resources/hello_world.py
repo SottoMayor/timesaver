@@ -6,4 +6,4 @@ blp = Blueprint('hello-world', __name__, url_prefix="/", description='initial bl
 @blp.route('/')
 class HelloWorld(MethodView):
     def get(self):
-        return 'OK'
+        return '<main><h1>Health Check!</h1> <p>Vá para <a href="/schedules">/schedules</a> para interagir com o app.</p></main>'
