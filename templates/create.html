@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+    <h2 class="greetings">Criar novo agendamento</h2>
+
+    <section class="form">
+        <div class="form-box">
+            <form>
+              <label for="cliente">Nome do Cliente</label>
+              <input type="text" id="cliente" name="cliente" required>
+          
+              <label for="servico">Nome do Serviço</label>
+              <input type="text" id="servico" name="servico" required>
+          
+              <label for="data">Data</label>
+              <input type="date" id="data" name="data" required>
+          
+              <label for="horario">Horário</label>
+              <input type="time" id="horario" name="horario" required>
+          
+              <button type="submit">Agendar</button>
+            </form>
+          </div>
+    </section>
+    
+{% endblock %}

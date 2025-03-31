@@ -7,8 +7,7 @@ blp = Blueprint('Schedules', __name__, url_prefix="/schedules", description='Blu
 @blp.route('/')
 class Schedules(MethodView):
     def get(self):
-        nome = "João"
-        return render_template("index.html", nome=nome)
+        return render_template("index.html")
     
     def post(self):
         return 'POST SCHEDULE'
@@ -19,3 +18,7 @@ class Schedules(MethodView):
     def delete(self):
         return 'DELETE SCHEDULE'
     
+@blp.route('/create')
+class Schedules(MethodView):
+    def get(self):
+        return render_template("create.html")
