@@ -22,3 +22,8 @@ class Schedules(MethodView):
 class Schedules(MethodView):
     def get(self):
         return render_template("create.html")
+    
+@blp.route('/update')
+class Schedules(MethodView):
+    def get(self):
+        return render_template("update.html")
