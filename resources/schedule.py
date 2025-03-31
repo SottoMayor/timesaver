@@ -44,12 +44,28 @@ class SchedulesCreate(MethodView):
 @blp.route('/update/<int:schedule_id>')
 class SchedulesUpdate(MethodView):
     def get(self, schedule_id):
-        print('schedule_id', schedule_id)
-        return render_template("update.html")
+        schedule = ScheduleModel.query.get_or_404(schedule_id)
+        return render_template("update.html", schedule=schedule)
     
     def post(self, schedule_id):
-        print('schedule_id', schedule_id)
+        schedule = ScheduleModel.query.get_or_404(schedule_id)
+        
+        schema = ScheduleSchema()
+
+        try:
+            data = schema.load(request.form)
+        except ValidationError as err:
+            return {"errors": err.messages}, 400
+
+        schedule.client = data['cliente']
+        schedule.service = data['servico']
+        schedule.schedule_date = data['data']
+        schedule.schedule_time = data['horario']
+
+        db.session.commit()
+        return redirect(url_for('Schedules.SchedulesList'))
     
+
 @blp.route('/delete/<int:schedule_id>')
 class SchedulesDelete(MethodView):
     def post(self, schedule_id):

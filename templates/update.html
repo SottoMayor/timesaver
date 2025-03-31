@@ -7,18 +7,18 @@
 
     <section class="form">
         <div class="form-box">
-            <form>
+            <form method="POST" action="/schedules/update/{{ schedule.id }}">
               <label for="cliente">Nome do Cliente</label>
-              <input type="text" id="cliente" name="cliente" required>
+              <input type="text" id="cliente" name="cliente" value="{{ schedule.client }}" required>
           
               <label for="servico">Nome do Serviço</label>
-              <input type="text" id="servico" name="servico" required>
+              <input type="text" id="servico" name="servico" value="{{ schedule.service }}" required>
           
               <label for="data">Data</label>
-              <input type="date" id="data" name="data" required>
+              <input type="date" id="data" name="data" value="{{ schedule.schedule_date }}" required>
           
               <label for="horario">Horário</label>
-              <input type="time" id="horario" name="horario" required>
+              <input type="time" id="horario" name="horario" value="{{ schedule.schedule_time }}" required>
           
               <button class="button" type="submit">Atualizar</button>
             </form>
