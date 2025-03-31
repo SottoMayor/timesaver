@@ -12,7 +12,20 @@ blp = Blueprint('Schedules', __name__, url_prefix="/schedules", description='Blu
 @blp.route('/')
 class SchedulesList(MethodView):
     def get(self):
-        schedules = ScheduleModel.query.order_by(ScheduleModel.schedule_date).all()
+        query = ScheduleModel.query
+
+        date = request.args.get("date")
+        client = request.args.get("client")
+        service = request.args.get("service")
+
+        if date:
+            query = query.filter(ScheduleModel.schedule_date == date)
+        if client:
+            query = query.filter(ScheduleModel.client.ilike(f"%{client}%"))
+        if service:
+            query = query.filter(ScheduleModel.service.ilike(f"%{service}%"))
+
+        schedules = query.order_by(ScheduleModel.schedule_date).all()
         return render_template("index.html", schedules=schedules)
     
     def post(self):

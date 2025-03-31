@@ -90,6 +90,64 @@ body {
     gap: 1rem;
 }
 
+.form-filter_control {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.form-filter {
+    background-color: #d9dcd6;
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-filter form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-filter label {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
+.form-filter input {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-filter input:hover {
+    border-color: #999;
+}
+
+.form-filter input:focus {
+    border-color: #555;
+    outline: none;
+    box-shadow: 0 0 5px rgba(85, 85, 85, 0.3);
+}
+
+.form-filter button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    border: none;
+    background-color: #555;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-filter button:hover {
+    background-color: #333;
+}
+
 /* Create  / Update */
 .form {
     display: flex;

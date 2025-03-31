@@ -3,8 +3,18 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
+
     <h2 class="greetings">Bem-vindo!</h2>
     <p class="greetings">Página para visualizar os agendamentos!</p>
+
+    <div class="form-filter_control">
+        <form method="GET" action="/schedules" class="form-filter">
+            <input type="date" name="date" placeholder="Data" value="{{ request.args.get('date', '') }}">
+            <input type="text" name="client" placeholder="Cliente" value="{{ request.args.get('client', '') }}">
+            <input type="text" name="service" placeholder="Serviço" value="{{ request.args.get('service', '') }}">
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
 
     <div class="card-wrapper">
         {% for schedule in schedules %}
