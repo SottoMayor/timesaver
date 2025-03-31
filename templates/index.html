@@ -7,20 +7,25 @@
     <p class="greetings">Página para visualizar os agendamentos!</p>
 
     <div class="card-wrapper">
-        <div class="card">
-            <section>
-                <h2>Cliente: X</h2>
-                <h2>Agendamento: X</h2>
-                <h3>Data: X</h3>
-                <h3>Horário: X</h3>
-            </section>
-            <section class="card_buttons">
-                <a href="/schedules/update">
-                    <button class="button warning">Atualizar</button>
-                </a>
-                <button class="button danger">Excluir</button>
-            </section>
-        </div>
+        {% for schedule in schedules %}
+            <div class="card">
+                <section>
+                    <h2>Cliente: {{ schedule.client }}</h2>
+                    <h2>Agendamento: {{ schedule.service }}</h2>
+                    <h3>Data: {{ schedule.schedule_date.strftime('%d/%m/%Y') }}</h3>
+                    <h3>Horário: {{ schedule.schedule_time }}</h3>
+                </section>
+                <section class="card_buttons">
+                    <a href="/schedules/update/{{ schedule.id }}">
+                        <button class="button warning">Atualizar</button>
+                    </a>
+                    <form method="POST" action="/schedules/delete/{{ schedule.id }}" style="display:inline;">
+                        <input type="hidden" name="id">
+                        <button class="button danger" type="submit">Excluir</button>
+                    </form>
+                </section>
+            </div>
+        {% endfor %}
     </div>
     
 {% endblock %}

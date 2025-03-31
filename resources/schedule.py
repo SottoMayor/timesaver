@@ -12,7 +12,8 @@ blp = Blueprint('Schedules', __name__, url_prefix="/schedules", description='Blu
 @blp.route('/')
 class SchedulesList(MethodView):
     def get(self):
-        return render_template("index.html")
+        schedules = ScheduleModel.query.order_by(ScheduleModel.schedule_date).all()
+        return render_template("index.html", schedules=schedules)
     
     def post(self):
         schema = ScheduleSchema()
