@@ -1,5 +1,6 @@
 from flask import Flask
 from database.connection import db
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -10,6 +11,9 @@ FLASK_PORT = app.config['FLASK_PORT']
 
 # DB
 db.init_app(app)
+
+# Migrations
+migrate = Migrate(app, db)
 
 @app.route('/')
 def hello_world():
