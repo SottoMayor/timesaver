@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["flask", "run", "--host", "0.0.0.0"]
+CMD ["sh", "-c", "flask db upgrade -d database/migrations && flask run --host=0.0.0.0"]
