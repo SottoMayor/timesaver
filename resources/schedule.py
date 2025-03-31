@@ -53,5 +53,7 @@ class SchedulesUpdate(MethodView):
 @blp.route('/delete/<int:schedule_id>')
 class SchedulesDelete(MethodView):
     def post(self, schedule_id):
-        print('schedule_id del', schedule_id)
+        schedule = ScheduleModel.query.get_or_404(schedule_id)
+        db.session.delete(schedule)
+        db.session.commit()
         return redirect(url_for('Schedules.SchedulesList'))
