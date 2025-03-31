@@ -10,7 +10,7 @@ from models.schedule import ScheduleModel
 blp = Blueprint('Schedules', __name__, url_prefix="/schedules", description='Blueprint para agendamentos.')
 
 @blp.route('/')
-class Schedules(MethodView):
+class SchedulesList(MethodView):
     def get(self):
         return render_template("index.html")
     
@@ -31,20 +31,26 @@ class Schedules(MethodView):
         db.session.add(schedule)
         db.session.commit()
 
-        return redirect(url_for('Schedules.Schedules'))
+        return redirect(url_for('Schedules.SchedulesList'))
     
-    def patch(self):
-        return 'PATCH SCHEDULE'
-    
-    def delete(self):
-        return 'DELETE SCHEDULE'
     
 @blp.route('/create')
-class Schedules(MethodView):
+class SchedulesCreate(MethodView):
     def get(self):
         return render_template("create.html")
+
     
-@blp.route('/update')
-class Schedules(MethodView):
-    def get(self):
+@blp.route('/update/<int:schedule_id>')
+class SchedulesUpdate(MethodView):
+    def get(self, schedule_id):
+        print('schedule_id', schedule_id)
         return render_template("update.html")
+    
+    def post(self, schedule_id):
+        print('schedule_id', schedule_id)
+    
+@blp.route('/delete/<int:schedule_id>')
+class SchedulesDelete(MethodView):
+    def post(self, schedule_id):
+        print('schedule_id del', schedule_id)
+        return redirect(url_for('Schedules.SchedulesList'))
