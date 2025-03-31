@@ -1,6 +1,8 @@
 from flask import Flask
 from database.connection import db
 from flask_migrate import Migrate
+from flask_smorest import Api
+from resources.hello_world import blp as HelloWorldBlueprint
 
 app = Flask(__name__)
 
@@ -15,8 +17,8 @@ db.init_app(app)
 # Migrations
 migrate = Migrate(app, db)
 
-@app.route('/')
-def hello_world():
-    return "ok!"
+# Blueprints
+api = Api(app)
+api.register_blueprint(HelloWorldBlueprint)
 
 print(f'App running on {FLASK_HOST}:{FLASK_PORT} 🚀')
