@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_smorest import Api
 from resources.hello_world import blp as HelloWorldBlueprint
 from resources.schedule import blp as ScheduleBlueprint
+import models
 
 app = Flask(__name__)
 
