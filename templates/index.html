@@ -3,6 +3,34 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
-    <h2>Bem-vindo, {{ nome }}!</h2>
-    <p>Página para visualizar os agendamentos!</p>
+    <h2 class="greetings">Bem-vindo!</h2>
+    <p class="greetings">Página para visualizar os agendamentos!</p>
+
+    <div class="card-wrapper">
+        <div class="card">
+            <section>
+                <h2>Cliente: X</h2>
+                <h2>Agendamento: X</h2>
+                <h3>Data: X</h3>
+                <h3>Horário: X</h3>
+            </section>
+            <section class="card_buttons">
+                <button class="button warning">Atualizar</button>
+                <button class="button danger">Excluir</button>
+            </section>
+        </div>
+        <div class="card">
+            <section>
+                <h2>Cliente: X</h2>
+                <h2>Agendamento: X</h2>
+                <h3>Data: X</h3>
+                <h3>Horário: X</h3>
+            </section>
+            <section class="card_buttons">
+                <button class="button warning">Atualizar</button>
+                <button class="button danger">Excluir</button>
+            </section>
+        </div>
+    </div>
+    
 {% endblock %}
