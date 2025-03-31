@@ -1,3 +1,4 @@
+from flask import render_template
 from flask_smorest import Blueprint
 from flask.views import MethodView
 
@@ -6,7 +7,8 @@ blp = Blueprint('Schedules', __name__, url_prefix="/schedules", description='Blu
 @blp.route('/')
 class Schedules(MethodView):
     def get(self):
-        return 'GET SCHEDULE'
+        nome = "João"
+        return render_template("index.html", nome=nome)
     
     def post(self):
         return 'POST SCHEDULE'
