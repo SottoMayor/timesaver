@@ -6,6 +6,7 @@ from marshmallow import ValidationError
 from schemas.schedule_schema import ScheduleSchema
 from database.connection import db
 from models.schedule import ScheduleModel
+from datetime import date
 
 blp = Blueprint('Schedules', __name__, url_prefix="/schedules", description='Blueprint para agendamentos.')
 
@@ -51,14 +52,16 @@ class SchedulesList(MethodView):
 @blp.route('/create')
 class SchedulesCreate(MethodView):
     def get(self):
-        return render_template("create.html")
+        today = date.today().isoformat()
+        return render_template("create.html", current_date=today)
 
     
 @blp.route('/update/<int:schedule_id>')
 class SchedulesUpdate(MethodView):
     def get(self, schedule_id):
         schedule = ScheduleModel.query.get_or_404(schedule_id)
-        return render_template("update.html", schedule=schedule)
+        today = date.today().isoformat()
+        return render_template("update.html", schedule=schedule, current_date=today)
     
     def post(self, schedule_id):
         schedule = ScheduleModel.query.get_or_404(schedule_id)

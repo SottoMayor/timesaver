@@ -15,7 +15,7 @@
               <input type="text" id="servico" name="servico" value="{{ schedule.service }}" required>
           
               <label for="data">Data</label>
-              <input type="date" id="data" name="data" value="{{ schedule.schedule_date }}" required>
+              <input type="date" id="data" name="data" value="{{ schedule.schedule_date }}" min="{{ current_date }}" required>
           
               <label for="horario">Horário</label>
               <input type="time" id="horario" name="horario" value="{{ schedule.schedule_time }}" required>
