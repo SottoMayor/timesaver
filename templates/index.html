@@ -7,14 +7,16 @@
     <h2 class="greetings">Bem-vindo!</h2>
     <p class="greetings">Página para visualizar os agendamentos!</p>
 
-    <div class="form-filter_control">
-        <form method="GET" action="/schedules" class="form-filter">
-            <input type="date" name="date" placeholder="Data" value="{{ request.args.get('date', '') }}">
-            <input type="text" name="client" placeholder="Cliente" value="{{ request.args.get('client', '') }}">
-            <input type="text" name="service" placeholder="Serviço" value="{{ request.args.get('service', '') }}">
-            <button type="submit">Filtrar</button>
-        </form>
-    </div>
+    {% if schedules|length > 0 %}
+        <div class="form-filter_control">
+            <form method="GET" action="/schedules" class="form-filter">
+                <input type="date" name="date" placeholder="Data" value="{{ request.args.get('date', '') }}">
+                <input type="text" name="client" placeholder="Cliente" value="{{ request.args.get('client', '') }}">
+                <input type="text" name="service" placeholder="Serviço" value="{{ request.args.get('service', '') }}">
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+    {% endif %}
 
     <div class="card-wrapper">
         {% for schedule in schedules %}
@@ -23,7 +25,7 @@
                     <h2>Cliente: {{ schedule.client }}</h2>
                     <h2>Agendamento: {{ schedule.service }}</h2>
                     <h3>Data: {{ schedule.schedule_date.strftime('%d/%m/%Y') }}</h3>
-                    <h3>Horário: {{ schedule.schedule_time }}</h3>
+                    <h3>Horário: {{ schedule.schedule_time[:5] }}</h3>
                 </section>
                 <section class="card_buttons">
                     <a href="/schedules/update/{{ schedule.id }}">
