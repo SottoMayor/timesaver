@@ -177,3 +177,44 @@ flask run
 - **docker-compose**:
   - Sobe o app + banco de dados juntos.
   - Banco com volume de dados persistente.
+
+### 8. Estrutura de pastas:
+
+```
+├── .env
+├── .flaskenv
+├── .gitignore
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── app.py
+├── database
+    ├── connection.py
+    └── migrations
+    │   ├── README
+    │   ├── alembic.ini
+    │   ├── env.py
+    │   ├── script.py.mako
+    │   └── versions
+    │       └── ca35d5158a91_.py
+├── docker-compose.yml
+├── models
+    ├── __init__.py
+    ├── schedule.py
+    └── timestamp.py
+├── requirements.txt
+├── resources
+    ├── hello_world.py
+    └── schedule.py
+├── schemas
+    └── schedule_schema.py
+├── settings
+    └── env.py
+├── static
+    └── style.css
+└── templates
+    ├── create.html
+    ├── index.html
+    ├── layout.html
+    └── update.html
+```
