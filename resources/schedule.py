@@ -39,7 +39,7 @@ class SchedulesList(MethodView):
         client=data['cliente'],
         service=data['servico'],
         schedule_date=data['data'],
-        schedule_time=data['horario']
+        schedule_time=data['horario'].strftime('%H:%M:%S')
         )
 
         db.session.add(schedule)
@@ -73,7 +73,7 @@ class SchedulesUpdate(MethodView):
         schedule.client = data['cliente']
         schedule.service = data['servico']
         schedule.schedule_date = data['data']
-        schedule.schedule_time = data['horario']
+        schedule.schedule_time = data['horario'].strftime('%H:%M:%S')
 
         db.session.commit()
         return redirect(url_for('Schedules.SchedulesList'))
