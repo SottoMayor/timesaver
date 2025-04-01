@@ -13,7 +13,10 @@
                 <input type="date" name="date" placeholder="Data" value="{{ request.args.get('date', '') }}">
                 <input type="text" name="client" placeholder="Cliente" value="{{ request.args.get('client', '') }}">
                 <input type="text" name="service" placeholder="Serviço" value="{{ request.args.get('service', '') }}">
-                <button type="submit">Filtrar</button>
+                <button class="button btn-loading" style="display: inline;" type="submit">
+                    <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;" width="25" alt="Carregando">
+                    <span class="btn-text">Filtrar</span>
+                </button>
             </form>
         </div>
     {% endif %}
@@ -28,12 +31,20 @@
                     <h3>Horário: {{ schedule.schedule_time[:5] }}</h3>
                 </section>
                 <section class="card_buttons">
+                    
                     <a href="/schedules/update/{{ schedule.id }}">
-                        <button class="button warning">Atualizar</button>
+                        <button class="button warning btn-loading" data-href="/schedules/update/{{ schedule.id }}" data-original-text="Atualizar">
+                            <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;" width="25" alt="Carregando">
+                            <span class="btn-text">Atualizar</span>
+                        </button>
                     </a>
+                    
                     <form method="POST" action="/schedules/delete/{{ schedule.id }}" style="display:inline;">
                         <input type="hidden" name="id">
-                        <button class="button danger" type="submit">Excluir</button>
+                        <button class="button danger btn-loading" type="submit" data-original-text="Excluir">
+                            <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;" width="25" alt="Carregando">
+                            <span class="btn-text">Excluir</span>
+                        </button>
                     </form>
                 </section>
             </div>

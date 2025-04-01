@@ -8,6 +8,10 @@ body {
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+}
+
 .main {
     flex: 1;
     padding: 2%;
@@ -28,6 +32,18 @@ body {
     background-color: #8d99ae;
 }
 
+.btn-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-loading:disabled {
+    background-color: #ccc !important;
+    color: #666;
+    cursor: not-allowed;
+}
+
 .button {
     background-color: #4CAF50;
     color: white;
@@ -35,6 +51,8 @@ body {
     padding: 0.5rem 1rem;
     cursor: pointer;
     border-radius: 4px;
+    display: flex;
+    justify-content: center;
 }
 
 .button:hover {
@@ -99,10 +117,15 @@ body {
 .form-filter {
     background-color: #d9dcd6;
     padding: 1.5rem;
+    padding-top: 0.5rem;
     border-radius: 10px;
-    max-width: 600px;
+    max-width: 650px;
     width: 100%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end ;
+    gap: 3px;
 }
 
 .form-filter form {

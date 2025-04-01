@@ -20,7 +20,10 @@
               <label for="horario">Horário</label>
               <input type="time" id="horario" name="horario" required>
           
-              <button type="submit">Agendar</button>
+              <button class="button btn-loading" type="submit" data-original-text="Agendar">
+                <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;" width="25" alt="Carregando">
+                <span class="btn-text">Agendar</span>
+            </button>
             </form>
           </div>
     </section>
