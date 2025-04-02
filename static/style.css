@@ -198,7 +198,7 @@ a {
     margin-bottom: 0.2rem;
 }
 
-.form-box input {
+.form-box input, select {
     padding: 0.6rem;
     border: 1px solid #ccc;
     border-radius: 6px;

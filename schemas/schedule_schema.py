@@ -4,7 +4,6 @@ from datetime import datetime
 class ScheduleSchema(Schema):
     cliente = fields.String(required=True)
     tuss_codigo = fields.String(required=True)
-    tuss_descricao = fields.String(required=True)
     data = fields.Date(required=True)
     horario = fields.Time(required=True)
     convenio = fields.String(required=False)

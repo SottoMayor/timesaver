@@ -3,29 +3,50 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
-    <h2 class="greetings">Criar novo agendamento</h2>
+<h2 class="greetings">Criar novo agendamento</h2>
 
-    <section class="form">
-        <div class="form-box">
-            <form method="POST" action="/schedules">
-              <label for="cliente">Nome do Cliente</label>
-              <input type="text" id="cliente" name="cliente" required>
-          
-              <label for="servico">Nome do Serviço</label>
-              <input type="text" id="servico" name="servico" required>
-          
-              <label for="data">Data</label>
-              <input type="date" id="data" name="data" min="{{ current_date }}" required>
-          
-              <label for="horario">Horário</label>
-              <input type="time" id="horario" name="horario" required>
-          
-              <button class="button btn-loading" type="submit" data-original-text="Agendar">
-                <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;" width="25" alt="Carregando">
-                <span class="btn-text">Agendar</span>
-            </button>
-            </form>
-          </div>
-    </section>
-    
+<section class="form">
+  <div class="form-box">
+    <form method="POST" action="/schedules">
+      <label for="cliente">Nome do Cliente</label>
+      <input type="text" id="cliente" name="cliente" required>
+
+      <label for="procedimento">Serviço (TUSS)</label>
+      <select name="tuss_codigo" id="procedimento" required>
+        <option value="">Selecione um serviço</option>
+        {% for t in tuss %}
+          <option value="{{ t.code }}">{{ t.code }} - {{ t.desc }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="data">Data</label>
+      <input type="date" id="data" name="data" min="{{ current_date }}" required>
+
+      <label for="horario">Horário</label>
+      <input type="time" id="horario" name="horario" required>
+
+      <label>
+        <input type="checkbox" id="toggle-convenio">
+        Consulta com convênio
+      </label>
+
+      <div id="convenio-wrapper" style="display: none; margin-top: 10px;">
+        <label for="convenio">Convênio</label>
+        <select id="convenio" name="convenio" style="width: 100%; margin-top: 20px;">
+          <option value="">Selecione o convênio</option>
+          {% for agreement in agreements %}
+            <option value="{{ agreement }}">{{ agreement }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button class="button btn-loading" type="submit" data-original-text="Agendar">
+        <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;"
+          width="25" alt="Carregando">
+        <span class="btn-text">Agendar</span>
+      </button>
+    </form>
+  </div>
+</section>
+
 {% endblock %}

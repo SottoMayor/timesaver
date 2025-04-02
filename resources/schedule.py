@@ -30,17 +30,32 @@ class SchedulesList(MethodView):
         return render_template("index.html", schedules=schedules)
     
     def post(self):
+        tuss = [
+            {"code": "10101012", "desc": "Consulta médica em consultório"},
+            {"code": "20103038", "desc": "Exame de glicemia em jejum"},
+            {"code": "30101016", "desc": "Hemograma completo"},
+            {"code": "40301033", "desc": "Raio-X de tórax"},
+            {"code": "50101018", "desc": "Ultrassonografia do abdome total"},
+        ] # como se fosse uma chamada de API
+        
         schema = ScheduleSchema()
         try:
+            print(request.form)
             data = schema.load(request.form)
         except ValidationError as err:
             return {"errors": err.messages}, 400
+        
+        tuss_resul = next((item for item in tuss if item["code"] == data['tuss_codigo']), None)
+        if(not tuss_resul):
+            return {"errors": err.messages}, 404
 
         schedule = ScheduleModel(
         client=data['cliente'],
-        service=data['servico'],
         schedule_date=data['data'],
-        schedule_time=data['horario'].strftime('%H:%M:%S')
+        schedule_time=data['horario'].strftime('%H:%M:%S'),
+        tuss_code=tuss_resul['code'],
+        tuss_description=tuss_resul['desc'],
+        agreement=(data['convenio'] or None)
         )
 
         db.session.add(schedule)
@@ -53,7 +68,16 @@ class SchedulesList(MethodView):
 class SchedulesCreate(MethodView):
     def get(self):
         today = date.today().isoformat()
-        return render_template("create.html", current_date=today)
+        agreements = ["Unimed", "Bradesco Saúde", "Amil", "SulAmérica", "Particular"]
+        tuss = [
+            {"code": "10101012", "desc": "Consulta médica em consultório"},
+            {"code": "20103038", "desc": "Exame de glicemia em jejum"},
+            {"code": "30101016", "desc": "Hemograma completo"},
+            {"code": "40301033", "desc": "Raio-X de tórax"},
+            {"code": "50101018", "desc": "Ultrassonografia do abdome total"},
+        ] # como se fosse uma chamada de API
+        
+        return render_template("create.html", current_date=today, agreements=agreements, tuss=tuss)
 
     
 @blp.route('/update/<int:schedule_id>')
