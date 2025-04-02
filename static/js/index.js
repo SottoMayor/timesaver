@@ -2,20 +2,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.addEventListener("pageshow", function () {
         const buttons = document.querySelectorAll(".btn-loading");
-      
+
         buttons.forEach((button) => {
-          const textSpan = button.querySelector(".btn-text");
-          const loadingImg = button.querySelector(".loading-icon");
-      
-          if (textSpan && textSpan.innerText === "Carregando...") {
-            textSpan.innerText = button.dataset.originalText || "Enviar";
-          }
-      
-          if (loadingImg) loadingImg.style.display = "none";
-      
-          button.disabled = false;
+            const textSpan = button.querySelector(".btn-text");
+            const loadingImg = button.querySelector(".loading-icon");
+
+            if (textSpan && textSpan.innerText === "Carregando...") {
+                textSpan.innerText = button.dataset.originalText || "Enviar";
+            }
+
+            if (loadingImg) loadingImg.style.display = "none";
+
+            button.disabled = false;
         });
-      });
+    });
 
     const forms = document.querySelectorAll("form");
 
@@ -63,4 +63,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 2000);
         });
     });
+
+    /* ----------------------------------------------------------- */
+
+    const toggleCheckbox = document.getElementById("toggle-convenio");
+    const convenioWrapper = document.getElementById("convenio-wrapper");
+
+    if (toggleCheckbox && convenioWrapper) {
+        toggleCheckbox.addEventListener("change", function () {
+          if (this.checked) {
+            convenioWrapper.style.display = "block";
+          } else {
+            convenioWrapper.style.display = "none";
+            document.getElementById("convenio").value = "";
+          }
+        });
+      }
 })
