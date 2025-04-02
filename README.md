@@ -18,31 +18,42 @@ O app roda as migrations automaticamente, isso está embutido no `CMD` do Docker
 
 ## Como rodar o projeto localmente (fora do Docker)
 
-1. No `.env`, atualize a variável:
+1. Instale os requirements:
 
 ```
-SQLALCHEMY_DATABASE_URI=mysql://user:password@localhost:3306/test_db
+pip install -r requirements.txt
+```
+- Na seção "**Configuração do Projeto** > **1. Ambiente virtual (venv) e inicialização com Flask**" está descrito como rodar o venv.
+
+2. Certifique que as migrations estão levantadas:
+
+```
+flask db upgrade -d database/migrations
 ```
 
-2. No `docker-compose.yml`, comente todo o serviço `flask_timesaver_app`.
+3. Rode o server de desenvolvimento:
+```
+flask run
+```
+
+4. Acesse:
+```
+http://localhost:5000/schedules
+```
    
 ---
 
 ## Entidade `Schedule`
 
-| Campo           | Tipo     | Restrições   |
-|----------------|----------|--------------|
-| `id`           | int      | Primary Key  |
-| `schedule_date`| date     | Not Null     |
-| `schedule_time`| string     | Not Null     |
-| `client`       | string   | Not Null     |
-| `service`      | string   | Not Null     |
-
-> **Obs:** Como o objetivo principal é implementar o CRUD de Agendamentos, algumas decisões foram tomadas para simplificar:
-
-1. **Não houve normalização** das entidades `client` e `service`; foram representadas apenas como strings simples.
-2. **Não há autenticação** ou controle de acesso implementado.
-3. **A UI não trata erros de forma sofisticada**. Embora o Marshmallow seja usado para validar os dados, os erros são apenas exibidos diretamente na tela — o foco está na lógica e na persistência dos dados.
+| Campo             | Tipo    | Restrições   |
+|------------------|---------|--------------|
+| `id`             | int     | Primary Key  |
+| `schedule_date`  | date    | Not Null     |
+| `schedule_time`  | string  | Not Null     |
+| `client`         | string  | Not Null     |
+| `tuss_code`      | string  | Not Null     |
+| `tuss_description`| string | Not Null     |
+| `agreement`      | string  | Nullable     |
 
 ---
 
@@ -52,7 +63,7 @@ SQLALCHEMY_DATABASE_URI=mysql://user:password@localhost:3306/test_db
 Lista todos os agendamentos, com suporte a filtros opcionais via query string:
 
 ```
-/schedules?date={date}&client={client}&service={service}
+/schedules?date={schedule_date}&client={client}&service={tuss_description}
 ```
 
 ### [GET] `/schedules/create`
@@ -65,10 +76,11 @@ Cria um novo agendamento com base nos dados do formulário.
 
 ```
 {
-  schedule_date: string,
-  schedule_time: string,
-  client: string,
-  service: string
+  "cliente": string,
+  "tuss_codigo": string,
+  "data": string,
+  "horario": string,
+  "convenio": string | ""
 }
 ```
 
@@ -82,10 +94,11 @@ Atualiza os dados de um agendamento.
 
 ```
 {
-  schedule_date: string,
-  schedule_time: string,
-  client: string,
-  service: string
+  "cliente": string,
+  "tuss_codigo": string,
+  "data": string,
+  "horario": string,
+  "convenio": string | ""
 }
 ```
 
@@ -98,7 +111,6 @@ Remove o agendamento com o ID informado.
 
 1. Só existem métodos `GET` e `POST` nas rotas — não há uso de `PATCH` ou `DELETE` diretamente no navegador.
 2. Todos os dados enviados pelo `body` (formulários) chegam como **string**.
-3. 
 ---
 
 ## Configuração do Projeto
@@ -138,12 +150,7 @@ flask run
 ### 3. Conexão com o banco de dados
 
 - ORM: `SQLAlchemy`
-- SGBD: `MySQL`
-
-**Docker:**
-
-- `docker-compose.yml` sobe o banco de dados.
-- Volume configurado para **persistência de dados**.
+- SGBD: `SQLite`
 
 **Estrutura de código:**
 
@@ -175,8 +182,7 @@ flask run
   - Foco em desenvolvimento e iteração rápida.
 
 - **docker-compose**:
-  - Sobe o app + banco de dados juntos.
-  - Banco com volume de dados persistente.
+  - Sobe o app flask dockerizado 
 
 ### 8. Estrutura de pastas:
 
@@ -196,7 +202,7 @@ flask run
     │   ├── env.py
     │   ├── script.py.mako
     │   └── versions
-    │       └── ca35d5158a91_.py
+    │       └── 4f93f918ba6f_.py
 ├── docker-compose.yml
 ├── models
     ├── __init__.py
@@ -211,6 +217,12 @@ flask run
 ├── settings
     └── env.py
 ├── static
+    ├── images
+    │   ├── Logo_TimeSaver.png
+    │   ├── ampulheta.webp
+    │   └── favicon.ico
+    ├── js
+    │   └── index.js
     └── style.css
 └── templates
     ├── create.html
