@@ -31,6 +31,7 @@
                           {{ schedule.tuss_description }} ({{ schedule.tuss_code }})
                         </span>
                       </h2>
+                    <h3>Convênio: {{ schedule.agreement or 'Consulta Particular'  }}</h3>
                     <h3>Data: {{ schedule.schedule_date.strftime('%d/%m/%Y') }}</h3>
                     <h3>Horário: {{ schedule.schedule_time[:5] }}</h3>
                 </section>
