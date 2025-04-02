@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
             convenioWrapper.style.display = "block";
           } else {
             convenioWrapper.style.display = "none";
-            document.getElementById("convenio").value = "";
+            document.getElementById("convenio").value = ""
           }
         });
       }

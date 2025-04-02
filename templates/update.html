@@ -3,30 +3,53 @@
 {% block title %}Página Inicial{% endblock %}
 
 {% block content %}
-    <h2 class="greetings">Atualizar agendamento</h2>
+<h2 class="greetings">Atualizar agendamento</h2>
 
-    <section class="form">
-        <div class="form-box">
-            <form method="POST" action="/schedules/update/{{ schedule.id }}">
-              <label for="cliente">Nome do Cliente</label>
-              <input type="text" id="cliente" name="cliente" value="{{ schedule.client }}" required>
-          
-              <label for="servico">Nome do Serviço</label>
-              <input type="text" id="servico" name="servico" value="{{ schedule.service }}" required>
-          
-              <label for="data">Data</label>
-              <input type="date" id="data" name="data" value="{{ schedule.schedule_date }}" min="{{ current_date }}" required>
-          
-              <label for="horario">Horário</label>
-              <input type="time" id="horario" name="horario" value="{{ schedule.schedule_time }}" required>
+<section class="form">
+  <div class="form-box">
+    <form method="POST" action="/schedules/update/{{ schedule.id }}">
+      <label for="cliente">Nome do Cliente</label>
+      <input type="text" id="cliente" name="cliente" value="{{ schedule.client }}" required>
 
-              <button class="button btn-loading" type="submit" data-original-text="Atualizar">
-                <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;" width="25" alt="Carregando">
-                <span class="btn-text">Atualizar</span>
-            </button>
-              
-            </form>
-          </div>
-    </section>
-    
+      <label for="procedimento">Nome do serviço (TUSS)</label>
+      <select name="tuss_codigo" id="procedimento" required>
+        <option value="">Selecione um serviço</option>
+        {% for t in tuss %}
+        <option value="{{ t.code }}" {% if t.code == schedule.tuss_code %}selected{% endif %}>
+          {{ t.code }} - {{ t.desc }}
+        </option>
+        {% endfor %}
+      </select>
+
+      <label for="data">Data</label>
+      <input type="date" id="data" name="data" value="{{ schedule.schedule_date }}" min="{{ current_date }}" required>
+
+      <label for="horario">Horário</label>
+      <input type="time" id="horario" name="horario" value="{{ schedule.schedule_time }}" required>
+
+      <label>
+        <input type="checkbox" id="toggle-convenio" {% if schedule.agreement %}checked{% endif %}>
+        Usar convênio?
+      </label>
+      
+      <div id="convenio-wrapper" class="{% if not schedule.agreement %}hidden{% endif %}">
+        <label for="convenio">Convênio</label>
+        <select id="convenio" name="convenio" style="width: 100%; margin-top: 20px;">
+          <option value="">Selecione o convênio</option>
+          {% for agreement in agreements %}
+            <option value="{{ agreement }}" {% if agreement == schedule.agreement %}selected{% endif %}>{{ agreement }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button class="button btn-loading" type="submit" data-original-text="Atualizar">
+        <img src="{{ url_for('static', filename='images/ampulheta.webp') }}" class="loading-icon" style="display:none;"
+          width="25" alt="Carregando">
+        <span class="btn-text">Atualizar</span>
+      </button>
+
+    </form>
+  </div>
+</section>
+
 {% endblock %}

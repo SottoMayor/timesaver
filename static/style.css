@@ -172,6 +172,10 @@ a {
 }
 
 /* Create  / Update */
+.hidden{
+    display: none;
+}
+
 .form {
     display: flex;
     align-items: center;

@@ -42,7 +42,6 @@ class SchedulesList(MethodView):
         
         schema = ScheduleSchema()
         try:
-            print(request.form)
             data = schema.load(request.form)
         except ValidationError as err:
             return {"errors": err.messages}, 400
@@ -70,7 +69,7 @@ class SchedulesList(MethodView):
 class SchedulesCreate(MethodView):
     def get(self):
         today = date.today().isoformat()
-        agreements = ["Unimed", "Bradesco Saúde", "Amil", "SulAmérica", "Particular"]
+        agreements = ["Unimed", "Bradesco Saúde", "Amil", "SulAmérica"]
         tuss = [
             {"code": "10101012", "desc": "Consulta médica em consultório"},
             {"code": "20103038", "desc": "Exame de glicemia em jejum"},
@@ -87,9 +86,26 @@ class SchedulesUpdate(MethodView):
     def get(self, schedule_id):
         schedule = ScheduleModel.query.get_or_404(schedule_id)
         today = date.today().isoformat()
-        return render_template("update.html", schedule=schedule, current_date=today)
+        agreements = ["Unimed", "Bradesco Saúde", "Amil", "SulAmérica"]
+        tuss = [
+            {"code": "10101012", "desc": "Consulta médica em consultório"},
+            {"code": "20103038", "desc": "Exame de glicemia em jejum"},
+            {"code": "30101016", "desc": "Hemograma completo"},
+            {"code": "40301033", "desc": "Raio-X de tórax"},
+            {"code": "50101018", "desc": "Ultrassonografia do abdome total"},
+        ] # como se fosse uma chamada de API
+        
+        return render_template("update.html", schedule=schedule, current_date=today, agreements=agreements, tuss=tuss)
     
     def post(self, schedule_id):
+        tuss = [
+            {"code": "10101012", "desc": "Consulta médica em consultório"},
+            {"code": "20103038", "desc": "Exame de glicemia em jejum"},
+            {"code": "30101016", "desc": "Hemograma completo"},
+            {"code": "40301033", "desc": "Raio-X de tórax"},
+            {"code": "50101018", "desc": "Ultrassonografia do abdome total"},
+        ]
+        
         schedule = ScheduleModel.query.get_or_404(schedule_id)
         
         schema = ScheduleSchema()
@@ -98,11 +114,19 @@ class SchedulesUpdate(MethodView):
             data = schema.load(request.form)
         except ValidationError as err:
             return {"errors": err.messages}, 400
+        
+        tuss_resul = next((item for item in tuss if item["code"] == data['tuss_codigo']), None)
+        if(not tuss_resul):
+            return {"errors": err.messages}, 404
+        
+        print(request.form, tuss_resul)
 
         schedule.client = data['cliente']
-        schedule.service = data['servico']
         schedule.schedule_date = data['data']
         schedule.schedule_time = data['horario'].strftime('%H:%M:%S')
+        schedule.tuss_code = tuss_resul['code']
+        schedule.tuss_description = tuss_resul['desc']
+        schedule.agreement = (data['convenio'] or None)
 
         db.session.commit()
         return redirect(url_for('Schedules.SchedulesList'))
