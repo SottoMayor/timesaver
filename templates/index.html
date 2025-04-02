@@ -7,7 +7,7 @@
     <h2 class="greetings">Bem-vindo!</h2>
     <p class="greetings">Página para visualizar os agendamentos!</p>
 
-    {% if schedules|length > 0 %}
+    {% if at_least_one %}
         <div class="form-filter_control">
             <form method="GET" action="/schedules" class="form-filter">
                 <input type="date" name="date" placeholder="Data" value="{{ request.args.get('date', '') }}">
@@ -25,8 +25,12 @@
         {% for schedule in schedules %}
             <div class="card">
                 <section>
-                    <h2>Cliente: {{ schedule.client }}</h2>
-                    <h2>Agendamento: {{ schedule.service }}</h2>
+                    <h2>Cliente: <span style="font-size:20px;">{{ schedule.client }}</span></h2>
+                    <h2>Agendamento: 
+                        <span style="font-size:20px;">
+                          {{ schedule.tuss_description }} ({{ schedule.tuss_code }})
+                        </span>
+                      </h2>
                     <h3>Data: {{ schedule.schedule_date.strftime('%d/%m/%Y') }}</h3>
                     <h3>Horário: {{ schedule.schedule_time[:5] }}</h3>
                 </section>

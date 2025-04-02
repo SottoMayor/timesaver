@@ -24,10 +24,12 @@ class SchedulesList(MethodView):
         if client:
             query = query.filter(ScheduleModel.client.ilike(f"%{client}%"))
         if service:
-            query = query.filter(ScheduleModel.service.ilike(f"%{service}%"))
+            query = query.filter(ScheduleModel.tuss_description.ilike(f"%{service}%"))
 
         schedules = query.order_by(ScheduleModel.schedule_date).all()
-        return render_template("index.html", schedules=schedules)
+        
+        at_least_one = ScheduleModel.query.first()
+        return render_template("index.html", schedules=schedules, at_least_one=at_least_one)
     
     def post(self):
         tuss = [
